@@ -23,13 +23,23 @@ fn index() -> Redirect {
 }
 
 #[get("/hello/<name>")]
-fn get(name: String) -> Template {
+fn hello(name: String) -> Template {
     let context = TemplateContext {
         name: name,
         items: vec!["One", "Two", "Three"].iter().map(|s| s.to_string()).collect()
     };
 
     Template::render("index", &context)
+}
+ 	
+#[get("/map")]
+fn map() -> Template {
+    let context = TemplateContext {
+        name: String::from("Test"),
+        items: vec!["One", "Two", "Three"].iter().map(|s| s.to_string()).collect()
+    };
+
+    Template::render("map", &context)
 }
 
 #[error(404)]
@@ -41,7 +51,7 @@ fn not_found(req: &Request) -> Template {
 
 fn rocket() -> rocket::Rocket {
     rocket::ignite()
-        .mount("/", routes![index, get])
+        .mount("/", routes![index, hello, map])
         .attach(Template::fairing())
         .catch(errors![not_found])
 }
