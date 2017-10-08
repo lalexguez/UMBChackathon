@@ -39,7 +39,7 @@ fn map() -> Template {
         items: vec!["One", "Two", "Three"].iter().map(|s| s.to_string()).collect()
     };
 
-    Template::render("map", &context)
+    Template::render("mapCL", &context)
 }
 
 #[error(404)]
